@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "processor_revision": "il2cpp-prebuild-v6",
+  "il2cpp_so_sha256": "aacd38a8a63bb1af552832b9d68fbf3cb1e712753b263690c1f1c8c4554ede55",
+  "global_metadata_sha256": "23c6ba6aa3adf828b084955017cdbecd4e3103cbacbaa1db1b982c1dbc98e1ea",
+  "unity_version": "6000.4.6f1",
+  "unity_template_version": "23",
+  "ndk_version": "27.2.12479018",
+  "abi": [
+    "arm64-v8a"
+  ],
+  "target_sdk": 35,
+  "native_inventory": [
+    {
+      "name": "libPicoAmbisonicDecoder.so",
+      "sha256": "a90306834e8200e419b8786944b112129e2193b302544bc8b2ea6df340dcb8d4"
+    },
+    {
+      "name": "libPicoAudioRouter.so",
+      "sha256": "8815989163d1b09f78c575eea7b8e0646d13ec4a81fa36ba6d565907b5153869"
+    },
+    {
+      "name": "libPicoAudioSDKUnityNativePlugin.so",
+      "sha256": "347d5f94c94774e181ab1649257c36e2169c6e786342da6a3041bd3e16172449"
+    },
+    {
+      "name": "libUnityOpenXRHands.so",
+      "sha256": "7436a2d6369ee0efa7a56b490c9d90510a5824768a2cc7c185c0ed15ff74b87d"
+    },
+    {
+      "name": "lib_burst_generated.so",
+      "sha256": "2cb625390b48dd71802a034c13e092de8e7f865d3e50809f46bb6bca73948249"
+    },
+    {
+      "name": "libil2cpp.so",
+      "sha256": "aacd38a8a63bb1af552832b9d68fbf3cb1e712753b263690c1f1c8c4554ede55"
+    },
+    {
+      "name": "libmain.so",
+      "sha256": "ccfceb6b657024fa72845eeb7445424cacdd7a00f36a07896cc5430b83a87f7d"
+    },
+    {
+      "name": "libunity.so",
+      "sha256": "9961e3ea8009c36816c92f0802ffac71d5239c21139dbdfa399a3c945e0c6d13"
+    }
+  ],
+  "generated_at": "2026-11-09T06:30:32.873212+00:00"
+}
