@@ -8,7 +8,7 @@ dependencies {
 }
 
 android {
-    namespace "com.bujiaban.marblemail"
+    namespace "com.bujiaban.marble.pico"
     ndkPath "/Volumes/NewSSD/6000.4.6f1/PlaybackEngines/AndroidPlayer/NDK"
     ndkVersion "27.2.12479018"
     compileSdk 35
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.bujiaban.marblemail"
+        applicationId "com.bujiaban.marble.pico"
         versionName "0.1.0"
         minSdk 32
         targetSdk 35
