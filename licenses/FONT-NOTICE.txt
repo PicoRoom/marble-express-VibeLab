@@ -1,0 +1,24 @@
+Marble UI Sans — 2026-11-11
+
+SourceHanSansCN.ttf now contains Marble UI Sans, a static TrueType font
+instantiated from the original Source Han Sans CN VF default weight (250).
+The asset filename and Unity GUID remain stable for existing references.
+The TMP font continues to use Dynamic atlas population; no characters were
+removed and it can still display runtime exception text.
+
+Only unused variable-weight data was removed. All 31,036 glyph outlines,
+horizontal/vertical metrics and all cmap mappings (30,892 characters) were
+verified identical. Existing SDF atlas pixels were retained. The internal
+family name is Marble UI Sans in accordance with the original font's OFL
+Reserved Font Name declaration. Copyright and OFL terms are retained in
+MarbleUISans-OFL.txt and in the font metadata.
+
+Reproduce manually (fontTools required):
+  python3 -B tools/prepare_font.py ORIGINAL_VARIABLE_FONT.ttf OUTPUT.ttf
+Use the original variable font from source commit
+997860553ceaf3c8adaec55ad30c8bcfd624211d as input. Keep temporary files on
+/Volumes/NewSSD. This preparation is not run during Android cloud builds.
+
+Validate a replacement with the project's Unity FontEngine before shipping.
+Do not regenerate, resize or clear the existing TMP atlas as part of font
+file compression.

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "processor_revision": "il2cpp-prebuild-v6",
-  "il2cpp_so_sha256": "b7a3c914fce4913a847254db699f1f7975bc3260a4fb7e5dfecee8c876211e2c",
-  "global_metadata_sha256": "67454c2aa055d7cf7cc89b85d6512428de403b4f2d18b99513faae92fe31bd6a",
+  "il2cpp_so_sha256": "697f475acd685e2a9c32ffe7e73dbe5338d16dffc1b31876f8776ada86c7deee",
+  "global_metadata_sha256": "1228351a33c774447942e561c7d35120a45399c49872450b408fd96e7168982a",
   "unity_version": "6000.4.6f1",
   "unity_template_version": "23",
   "ndk_version": "27.2.12479018",
@@ -33,7 +33,7 @@
     },
     {
       "name": "libil2cpp.so",
-      "sha256": "b7a3c914fce4913a847254db699f1f7975bc3260a4fb7e5dfecee8c876211e2c"
+      "sha256": "697f475acd685e2a9c32ffe7e73dbe5338d16dffc1b31876f8776ada86c7deee"
     },
     {
       "name": "libmain.so",
@@ -44,5 +44,5 @@
       "sha256": "88c0ffc1ae713159fbb4de1666382adf364e2538ac394d65f9239255c669bbfb"
     }
   ],
-  "generated_at": "2026-11-10T09:11:25.062150+00:00"
+  "generated_at": "2026-11-11T02:58:28.673434+00:00"
 }

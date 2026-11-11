@@ -1,26 +1,21 @@
 # 弹珠速递 · VibeLab Android 工程
 
-- 应用名：弹珠速递
-- Android 包名：`com.bujiaban.marble.pico`
-- 版本：0.1.0 / code 1
-- 图标：沿用已确认的薄荷绿滑道、橙色收件箱和弹珠三层图标，含三层 SDF。
-- Unity 源工程：[PicoRoom/marble-express](https://github.com/PicoRoom/marble-express/tree/997860553ceaf3c8adaec55ad30c8bcfd624211d)
-- 对应源工程 commit：`997860553ceaf3c8adaec55ad30c8bcfd624211d`
+应用名：弹珠速递；包名：`com.bujiaban.marble.pico`；版本：0.1.0 / code 1。
 
-本次导出包含整套挑战等比适配选区、六种自由挑战、漏斗与引导修正、固定空间字幕与按钮、退出入口和音效。这里是按 `il2cpp-prebuild-v6` 处理后的独立 Android Gradle 工程；开发和修改玩法请使用源工程仓库。
+Unity 源工程：[PicoRoom/marble-express](https://github.com/PicoRoom/marble-express)。此次导出基于 `997860553ceaf3c8adaec55ad30c8bcfd624211d`，加上本机尚未提交的代码体积和字体优化；玩法、音频、贴图分辨率和现有 SDF atlas 保持。
 
-## 工具链与构建
+## 压缩与复现
 
-Unity 6000.4.6f1 导出，Gradle 9.1.0、AGP 9.0.0、NDK 27.2.12479018、Build Tools 36.0.0、Java 17 语言级别、ARM64、min SDK 32、target/compile SDK 35。SDK/JDK/NDK 路径由构建环境按平台流程提供。Unity 6 标准导出不包含 gradlew；使用对应 Gradle 安装运行 `gradle :launcher:assembleRelease`。
+Unity 6000.4.6f1 的 AndroidBuild 和 SceneBootstrap 启用 IL2CPP `OptimizeSize`，保持 Minimal managed stripping。主运行库从 75,037,568 字节降到 36,746,264 字节。该选项优化代码体积，真机运行性能尚未复测。
 
-`libil2cpp.so` 已由本次导出强制重新编译，C++ 源码及本地构建缓存已移除，`buildIl2Cpp` 任务保留并禁用；`.vibelab-prebuilt.json` 记录 metadata 和全部随项目提交的原生库哈希。保留 Unity 模板的 debug 签名配置，不含私有签名文件。
+源工程的 `tools/prepare_font.py` 将原可变字体实例化为默认字重的 Marble UI Sans，保留全部 30,892 字符、31,036 字形、排版指标和 Dynamic TMP 功能。字体从 17,773,360 字节降到 10,594,448 字节。许可证和归属见 `licenses/MarbleUISans-OFL.txt`、`licenses/FONT-NOTICE.txt`。
 
-## 本机验证 · 2026-11-10
+在仅支持 ARM64 的前提下，清理 `LoaderForUnitySDK.aar`、`platformloader.aar`、`tobservicelib-release.aar` 中 8 个非 ARM64 原生库条目，合计减少 1,359,951 字节。全部保留成员的数据与 ZIP 元信息保持一致；清理后重新构建，APK 的全部 362 个文件内容及 16 个原生库均与清理前一致，签名和 zipalign 验证通过。重新 Unity 导出会恢复供应商原始 AAR，需要再次核查这一步。
 
-- 原始导出预编译及 Release 构建成功。
-- 删除 C++ 源码和构建缓存后再次独立构建成功，`buildIl2Cpp SKIPPED`。
-- 清理前后 APK 内所有原生库的名称、ABI、SHA256 一致。
-- APK 包名、默认及中文应用名、三层图标、三层 SDF、签名、ZIP 完整性和 zipalign 校验通过。
-- 验证 APK SHA256：`ed93e23d734e263eb484a40c3521c552a11235f99b6b331799cb32d5b90fdc8b`。
+修改源码后须重新 Unity 导出、预编译 IL2CPP，并按平台 il2cpp-prebuild-v6 流程清理和验证。此仓库保留匹配的 ARM64 运行库与 metadata，禁用 buildIl2Cpp，移除 C++ 中间源；不能随意替换运行库或 metadata。
 
-APK 和缓存不提交 Git。尚未验证 VibeLab 云构建或新包名在实体头显上的运行；新包名与旧包独立安装、独立保存数据。
+## 独立构建
+
+Gradle 9.1.0、AGP 9.0.0、NDK 27.2.12479018、Build Tools 36.0.0、Java 17、ARM64、min SDK 32、target/compile SDK 35。配置 Android SDK 环境后运行 `gradle :launcher:assembleRelease`。Unity 标准导出不包含 gradlew。平台提供构建工具链，并统一处理签名。
+
+本地验证：18 项 EditMode 测试通过；974 个 Unity FontEngine 样本像素和指标一致；清除 C++ 中间源及构建缓存后独立 Release 构建成功；清理前后 APK 原生库 SHA256 一致，打包 metadata 与工程一致，ZIP 和 zipalign 检查通过。未进行云构建或 PICO 真机复测。
