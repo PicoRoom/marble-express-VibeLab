@@ -1,21 +1,33 @@
 # 弹珠速递 · VibeLab Android 工程
 
-应用名：弹珠速递；包名：`com.bujiaban.marble.pico`；版本：0.1.0 / code 1。
+应用名：弹珠速递；包名：`com.bujiaban.marble.pico`；版本：0.1.0 / code 1；ARM64。
 
-Unity 源工程：[PicoRoom/marble-express](https://github.com/PicoRoom/marble-express)。此次导出基于 `997860553ceaf3c8adaec55ad30c8bcfd624211d`，加上本机尚未提交的代码体积和字体优化；玩法、音频、贴图分辨率和现有 SDF atlas 保持。
+本次导出对应 Unity 源工程 [PicoRoom/marble-express](https://github.com/PicoRoom/marble-express) 提交 `333d1a6d27e53b4e6a23324a40f621eb43bdf97e`。供平台提交的公开仓库为 [PicoRoom/marble-express-VibeLab](https://github.com/PicoRoom/marble-express-VibeLab)。玩法变更须回到 Unity 源工程重新导出、预编译与验证，不替换不配套的运行库或 metadata。
 
-## 压缩与复现
+## 本次修复与真机验证
 
-Unity 6000.4.6f1 的 AndroidBuild 和 SceneBootstrap 启用 IL2CPP `OptimizeSize`，保持 Minimal managed stripping。主运行库从 75,037,568 字节降到 36,746,264 字节。该选项优化代码体积，真机运行性能尚未复测。
+首次运行的授权弹窗暂停不再让尚无任务的会话显示“原路线已保留”。定位阶段持续显示真实的平面识别状态，恢复作品提示放在底部，权限或识别错误可以正常显示。
 
-源工程的 `tools/prepare_font.py` 将原可变字体实例化为默认字重的 Marble UI Sans，保留全部 30,892 字符、31,036 字形、排版指标和 Dynamic TMP 功能。字体从 17,773,360 字节降到 10,594,448 字节。许可证和归属见 `licenses/MarbleUISans-OFL.txt`、`licenses/FONT-NOTICE.txt`。
+2026-11-13，19 项 EditMode 测试与定位流程检查通过。使用同一源码构建的测试 APK 在 PICO B3110 上完成空间数据、手势与眼动授权，锁定 80 × 50 cm 区域，并在“弹跳抬升”任务中用 1 件道具成功配送（日志 `Result=Delivered`，约 1.20 秒）；完成状态和成绩已保存。此记录覆盖实际操作路径，不代表所有关卡均已真机复测。重新导出的成品与该测试 APK 的 global-metadata.dat 字节一致。
 
-在仅支持 ARM64 的前提下，清理 `LoaderForUnitySDK.aar`、`platformloader.aar`、`tobservicelib-release.aar` 中 8 个非 ARM64 原生库条目，合计减少 1,359,951 字节。全部保留成员的数据与 ZIP 元信息保持一致；清理后重新构建，APK 的全部 362 个文件内容及 16 个原生库均与清理前一致，签名和 zipalign 验证通过。重新 Unity 导出会恢复供应商原始 AAR，需要再次核查这一步。
+## 导出与构建
 
-修改源码后须重新 Unity 导出、预编译 IL2CPP，并按平台 il2cpp-prebuild-v6 流程清理和验证。此仓库保留匹配的 ARM64 运行库与 metadata，禁用 buildIl2Cpp，移除 C++ 中间源；不能随意替换运行库或 metadata。
+Unity 6000.4.6f1、Gradle 9.1.0、AGP 9.0.0、Java 17、NDK 27.2.12479018、Build Tools 36.0.0，min SDK 32、target/compile SDK 35。仅 launcher 是 Application module，其余均为 library；无 CMake 链路。
 
-## 独立构建
+导出后在同级 staging 副本中执行 `:unityLibrary:buildIl2Cpp --rerun` 强制预编译，核对 ARM64 ELF、NDK r27c/build 12479018、APK 内全部 16 个原生库与配套 metadata 后才移除 C++ 中间源。保留原 buildIl2Cpp 任务体和 inputs/outputs，在末尾禁用任务，清空 jni.srcDirs；`.vibelab-prebuilt.json` 使用平台 schema 1 / il2cpp-prebuild-v6。
 
-Gradle 9.1.0、AGP 9.0.0、NDK 27.2.12479018、Build Tools 36.0.0、Java 17、ARM64、min SDK 32、target/compile SDK 35。配置 Android SDK 环境后运行 `gradle :launcher:assembleRelease`。Unity 标准导出不包含 gradlew。平台提供构建工具链，并统一处理签名。
+工具链路径保留 Unity 标准导出值，由平台处理；unityProjectPath 与 unity.projectPath 已清空。不提交 local.properties、签名密钥、APK、构建缓存、IL2CPP 中间源码、symbols 或 Unity 源工程；Unity 标准导出不含 gradlew，平台提供 wrapper 并统一签名。
 
-本地验证：18 项 EditMode 测试通过；974 个 Unity FontEngine 样本像素和指标一致；清除 C++ 中间源及构建缓存后独立 Release 构建成功；清理前后 APK 原生库 SHA256 一致，打包 metadata 与工程一致，ZIP 和 zipalign 检查通过。未进行云构建或 PICO 真机复测。
+配置 JAVA_HOME、ANDROID_HOME 与 ANDROID_SDK_ROOT 后，在工程根目录运行：
+
+```sh
+gradle assembleRelease --console=plain --no-daemon
+```
+
+本机已清空模块构建目录后验证根目录 assembleRelease 成功，buildIl2Cpp 为 SKIPPED。清理前后 APK 的全部 16 个原生库名称、ABI、SHA256 一致。签名、逐库 llvm-readelf 与 zipalign 检查通过；9 个供应商插件库的 LOAD 对齐为 4 KB，按平台默认 page_size_policy=warn 记录，不能据此声明整个 APK 兼容 16 KB。
+
+## 保留的体积优化与许可证
+
+IL2CPP 使用 OptimizeSize，managed stripping 保持 Minimal。Marble UI Sans 从原可变字体的默认字重生成，保留全部字符、字形与 Dynamic TMP 能力，既有 SDF atlas 不变；来源、归属和 OFL 见 `licenses/` 及源工程 tools/prepare_font.py。
+
+仅 ARM64 的发布工程从 LoaderForUnitySDK.aar、platformloader.aar、tobservicelib-release.aar 移除 8 个非 ARM64 原生库条目，所有保留成员数据不变，清理前后 APK 原生库一致。重新导出会恢复供应商原始 AAR，应重新核查。其余供应商内容保留。详细来源和验证记录见 `export-info.json` 与 `unity-build.provenance.json`。

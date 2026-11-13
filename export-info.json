@@ -1,0 +1,85 @@
+{
+  "sourceRepository": "https://github.com/PicoRoom/marble-express",
+  "sourceCommit": "333d1a6d27e53b4e6a23324a40f621eb43bdf97e",
+  "unityVersion": "6000.4.6f1",
+  "applicationId": "com.bujiaban.marble.pico",
+  "versionName": "0.1.0",
+  "versionCode": 1,
+  "exportDate": "2026-11-13",
+  "prebuiltManifest": ".vibelab-prebuilt.json",
+  "sourceAutomaticChanges": {
+    "file": "Assets/IconConfigurator/Generated/fd8b837d34ccf44a98dbe91a06f96336/metadata/icon-config.json",
+    "change": "GeneratedAt timestamp only; recorded externally and restored in source workspace"
+  },
+  "precompilation": {
+    "command": ":unityLibrary:buildIl2Cpp --rerun --console=plain --no-daemon",
+    "result": "executed successfully, not skipped/up-to-date/from-cache",
+    "il2cppSHA256": "385651df15387ce2c185d4865b2306952a8bad29af4de8c36e67e472d3fd9f9a",
+    "ndkRelease": "r27c",
+    "ndkBuild": "12479018"
+  },
+  "standaloneBuild": {
+    "command": "assembleRelease --console=plain --no-daemon",
+    "result": "passed after removal of C++ sources and all module build caches",
+    "buildIl2Cpp": "SKIPPED",
+    "allNativeLibrariesMatchBeforeCleanup": true,
+    "nativeLibraryCount": 16,
+    "apkSHA256": "b61f1142b96d866d25936125a1c769b761abcb3293545524a9420491245caf7c",
+    "signatureVerified": true,
+    "zipAlignmentVerified": true,
+    "pageSizePolicy": "warn",
+    "fourKbAlignmentWarnings": [
+      "libCameraRenderingPlugin.so",
+      "libPICO_TOBAPI.so",
+      "libPicoAmbisonicDecoder.so",
+      "libPicoAudioRouter.so",
+      "libPicoAudioSDKUnityNativePlugin.so",
+      "libpvrcapturelib.so",
+      "libpxrplatformloader.so",
+      "libpxrplatformloader4j.so",
+      "libtobservice.so"
+    ],
+    "cloudBuildVerified": false
+  },
+  "validation": {
+    "editModeTests": {
+      "passed": 19,
+      "total": 19
+    },
+    "placementFlow": "passed",
+    "physicalDevice": "PICO B3110 / PB311XHGKC120265G",
+    "physicalTestApkSHA256": "809f37429017d77556ac7be62c574a9b1212fbc60aaadc9c0ca40ce3c338e3b0",
+    "physicalTestScope": "surface confirmation, task creation, launch, successful delivery and completed-save persistence on the same source; not exhaustive testing of all challenges",
+    "physicalTestTask": "弹跳抬升",
+    "physicalTestResult": "Delivered",
+    "bestTimeSeconds": 1.1999990940093994,
+    "bestPartCount": 1,
+    "metadataBytesMatchPhysicallyTestedApk": true,
+    "exportedApkSeparatelyWornAndRetested": false
+  },
+  "aarCleanup": [
+    {
+      "aar": "tobservicelib-release.aar",
+      "removed_non_arm64_entries": [
+        "jni/armeabi-v7a/libtobservice.so",
+        "jni/x86/libtobservice.so",
+        "jni/x86_64/libtobservice.so"
+      ]
+    },
+    {
+      "aar": "platformloader.aar",
+      "removed_non_arm64_entries": [
+        "jni/armeabi-v7a/libpxrplatformloader.so",
+        "jni/armeabi-v7a/libpxrplatformloader4j.so"
+      ]
+    },
+    {
+      "aar": "LoaderForUnitySDK.aar",
+      "removed_non_arm64_entries": [
+        "jni/armeabi-v7a/libopenxr_loader.so",
+        "jni/x86/libopenxr_loader.so",
+        "jni/x86_64/libopenxr_loader.so"
+      ]
+    }
+  ]
+}
